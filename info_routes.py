@@ -23,6 +23,10 @@ def software_info():
 
     filename_64bit = None
     filename_32bit = None
+    hash_64bit = None
+    hash_32bit = None
+    url_64bit = None
+    url_32bit = None
 
     # 判断根节点是否存在 "url" 和 "hash"
     if 'url' in data and 'hash' in data:
@@ -44,17 +48,16 @@ def software_info():
         architecture_64bit = architecture.get('64bit', {})
         architecture_32bit = architecture.get('32bit', {})
 
-        url_64bit = architecture_64bit.get('url')
-        url_64bit = url_64bit.split('#')[0]
-        hash_64bit = architecture_64bit.get('hash')
-        url_32bit = architecture_32bit.get('url')
-        url_32bit = url_32bit.split('#')[0]
-        hash_32bit = architecture_32bit.get('hash')
-
-        if url_64bit:
+        if architecture_64bit:
+            url_64bit = architecture_64bit.get('url')
+            url_64bit = url_64bit.split('#')[0]
+            hash_64bit = architecture_64bit.get('hash')
             parsed_url_64bit = urlparse(url_64bit)
             filename_64bit = unquote(parsed_url_64bit.path.split('/')[-1])
-        if url_32bit:
+        if architecture_32bit:
+            url_32bit = architecture_32bit.get('url')
+            url_32bit = url_32bit.split('#')[0]
+            hash_32bit = architecture_32bit.get('hash')
             parsed_url_32bit = urlparse(url_32bit)
             filename_32bit = unquote(parsed_url_32bit.path.split('/')[-1])
     
